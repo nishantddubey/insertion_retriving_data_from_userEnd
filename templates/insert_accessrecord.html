@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>Insert Accessrecord </h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="nm">Name</label>
+            <select name="nm" id="nm">
+                {% for  wo  in webpages %}
+                    <option value="{{wo.pk}}">{{wo.name}}</option>
+                {% endfor %}
+            </select><br><br>
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date"><br><br>
+            <label for="auth">Author</label>
+            <input type="text" name="auth" id="auth"><br><br>
+            <input type="submit" value="Insert_accessrecord">
+
+        </form>
+    </center>
+</body>
+</html>
