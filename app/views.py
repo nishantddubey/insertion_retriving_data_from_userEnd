@@ -73,3 +73,20 @@ def insert_accessrecord(request):
         d1 = {'accessrecord':QLAO}
         return render(request,'display_accessrecord.html',d1)
     return render(request,'insert_accessrecord.html',d)
+
+
+def select_multiple_accessrecord(request):
+    QLWO = WEBPAGE.objects.all()
+    d = {'webpages':QLWO}
+    if request.method=='POST':
+        pklist = request.POST.getlist('pk')
+        
+        QLAO = Accessrecord.objects.none()
+        
+        for nm in pklist:
+            QLAO =QLAO| Accessrecord.objects.filter(pk=nm)
+        
+        d1 = {'accessrecord': QLAO}
+        return render(request,'display_accessrecord.html',d1)
+    return render(request,'select_multiple_accessrecord.html',d)
+    
