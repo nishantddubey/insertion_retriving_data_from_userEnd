@@ -6,10 +6,10 @@ def create_topic(request):
     if request.method == 'POST':
         tn = request.POST['tn']
         
-        TO = TOPIC.objects.get_or_create(topic_name=tn)[0]
+        TO = Topic.objects.get_or_create(topic_name=tn)[0]
         TO.save()
         
-        QLTO = TOPIC.objects.all()
+        QLTO = Topic.objects.all()
         d = {"topic":QLTO}
         return render (request,'display_topic.html',d)
     
@@ -19,7 +19,7 @@ def create_topic(request):
 
 def create_webpage(request):
         
-    QLTO = TOPIC.objects.all()
+    QLTO = Topic.objects.all()
     d = {"topic":QLTO}  
     if request.method=='POST':
         tn = request.POST.get('tn')
@@ -27,11 +27,11 @@ def create_webpage(request):
         ur = request.POST.get('ur')
         em = request.POST.get('em')
         
-        TO = TOPIC.objects.get(topic_name=tn)
-        WO = WEBPAGE.objects.get_or_create(topic_name = TO,name = nm,url=ur,email=em)[0]
+        TO = Topic.objects.get(topic_name=tn)
+        WO = Webpage.objects.get_or_create(topic_name = TO,name = nm,url=ur,email=em)[0]
         WO.save()
         
-        QLWO = WEBPAGE.objects.all()
+        QLWO = Webpage.objects.all()
         d1 = {'webpages':QLWO}
         
         return render(request,'display_webpages.html',d1)
@@ -40,14 +40,14 @@ def create_webpage(request):
 
 
 def select_multiple(request):
-    QLTO = TOPIC.objects.all()
+    QLTO = Topic.obects.all()
     d = {"topic":QLTO}  
     if request.method=='POST':
         topiclist = request.POST.getlist('tn')
-        QLWO = WEBPAGE.objects.none()
+        QLWO = Webpage.objects.none()
         
         for topic_name in topiclist:
-            QLWO =QLWO| WEBPAGE.objects.filter(topic_name=topic_name)
+            QLWO =QLWO| Webpage.objects.filter(topic_name=topic_name)
         
         d1 = {'webpages': QLWO}
         return render(request,'display_webpages.html',d1)
@@ -57,14 +57,14 @@ def select_multiple(request):
 
 
 def insert_accessrecord(request):
-    QLWO = WEBPAGE.objects.all()
+    QLWO = Webpage.objects.all()
     d = {'webpages':QLWO}
     if request.method=='POST':
         nm = request.POST['nm']
         date = request.POST['date']
         auth = request.POST['auth']
         
-        p = WEBPAGE.objects.get(pk=nm)
+        p = Webpage.objects.get(pk=nm)
         
         AO = Accessrecord.objects.get_or_create(name=p,date=date,author=auth)[0]
         AO.save()
@@ -74,9 +74,8 @@ def insert_accessrecord(request):
         return render(request,'display_accessrecord.html',d1)
     return render(request,'insert_accessrecord.html',d)
 
-
 def select_multiple_accessrecord(request):
-    QLWO = WEBPAGE.objects.all()
+    QLWO = Webpage.objects.all()
     d = {'webpages':QLWO}
     if request.method=='POST':
         pklist = request.POST.getlist('pk')
@@ -89,4 +88,9 @@ def select_multiple_accessrecord(request):
         d1 = {'accessrecord': QLAO}
         return render(request,'display_accessrecord.html',d1)
     return render(request,'select_multiple_accessrecord.html',d)
+
+def checkbox(request):
+        QLTO = Topic.objects.all()
+        d = {'topics':QLTO}
+        return render(request,'checkbox.html',d)
     

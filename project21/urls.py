@@ -24,5 +24,6 @@ urlpatterns = [
     path('select_multiple/',select_multiple,name='select_multiple'),
     path('insert_accessrecord/',insert_accessrecord,name='insert_accessrecord'),
     path('select_multiple_accessrecord/',select_multiple_accessrecord,name='select_multiple_accessrecord'),
+    path('checkbox/',checkbox,name='checkbox'),
         
 ]
